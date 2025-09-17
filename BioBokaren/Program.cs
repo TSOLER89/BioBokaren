@@ -12,10 +12,13 @@ class SimpleCinemaBooking
         const string CURRENCY = "SEK";
 
         // Show movies
+        Console.WriteLine("Välkommen till Simple Cinema Booking!");
+        Console.WriteLine("--------------------------------------");
         Console.WriteLine("Välj en film:");
         for (int i = 0; i < movies.Length; i++)
         {
-            Console.WriteLine($"{i + 1}. {movies[i]} - {prices[i]} {CURRENCY}");
+            double priceWithTax = prices[i] * (1 + TAX);
+            Console.WriteLine($"{i + 1}. {movies[i]} - {prices[i]} {CURRENCY} (inkl. moms)");
         }
 
         // Choose movie
@@ -32,12 +35,23 @@ class SimpleCinemaBooking
         Console.Write("Är du student? (j/n): ");
         bool isStudent = Console.ReadLine().ToLower() == "j";
 
+        if (isStudent)
+        {
+            Console.WriteLine(" Studentrabatt aktiverad.");
+        }
+        else
+        {
+            Console.WriteLine("Ingen rabatt (endast studenter får rabatt).");
+        }
+
+
         // Calculate price
         double pricePerTicket = isStudent ? basePrice * (1 - STUDENT_DISCOUNT) : basePrice;
         double total = tickets * pricePerTicket * (1 + TAX);
+        Console.ReadLine();
 
         // Receipt
-        Console.WriteLine("\n🧾 KVITTO");
+        Console.WriteLine("KVITTO");
         Console.WriteLine($"Film: {movie}");
         Console.WriteLine($"Antal biljetter: {tickets}");
         Console.WriteLine($"Studentrabatt: {(isStudent ? "Ja" : "Nej")}");
